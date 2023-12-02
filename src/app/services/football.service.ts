@@ -7,9 +7,9 @@ import { Results } from '../interfaces/results';
   providedIn: 'root',
 })
 export class FootballService {
-  standings = '../../assets/standings.json';
-  fixitures = '../../assets/fixitures.json';
-  team = '../../assets/team.json';
+  standings = './standings.json';
+  fixitures = './fixitures.json';
+  team = './team.json';
 
   headers = {
     'x-rapidapi-host': environment.host,

@@ -11,6 +11,13 @@
     border-radius: 0px;
 }
 
+.nav-item.nav-link:hover {
+    border-bottom:  #06c solid 2px;
+    border-radius: 0px;
+   
+}
+
+
 .card{
     border-bottom: solid 0px lightgray;
 }

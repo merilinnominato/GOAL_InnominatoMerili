@@ -102,7 +102,7 @@ export class ResultsTeamComponent implements OnInit {
         
         }, (err) => {
           this.dataLoaded = false
-          this.textError = err.errors.requests;
+          this.textError = err;
         });
       } else {
         this.dataLoaded = false
@@ -111,7 +111,7 @@ export class ResultsTeamComponent implements OnInit {
     
     }, err => {
       this.dataLoaded = false
-      this.textError = err.errors.requests;
+      this.textError = err
     });
   }
   }

@@ -133,7 +133,7 @@ export class HeaderComponent implements OnInit {
       }, err => {
         this.isLoadedData = false;
         this.isResponseLoaded = true;
-        this.textError = err.errors.requests
+        this.textError = err
       });
     }
    

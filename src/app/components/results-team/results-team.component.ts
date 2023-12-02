@@ -100,12 +100,18 @@ export class ResultsTeamComponent implements OnInit {
             this.textError = res.errors.requests;
           }
         
+        }, (err) => {
+          this.dataLoaded = false
+          this.textError = err.errors.requests;
         });
       } else {
         this.dataLoaded = false
         this.textError = res.errors.requests;
       }
     
+    }, err => {
+      this.dataLoaded = false
+      this.textError = err.errors.requests;
     });
   }
   }

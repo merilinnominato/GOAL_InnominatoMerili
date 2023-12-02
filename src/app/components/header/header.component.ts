@@ -127,9 +127,13 @@ export class HeaderComponent implements OnInit {
           this.isLoadedData = false;
           this.isResponseLoaded = true;
           this.textError = res.errors.requests
-          console.log(this.textError)
+          //console.log(this.textError)
         }
        
+      }, err => {
+        this.isLoadedData = false;
+        this.isResponseLoaded = true;
+        this.textError = err.errors.requests
       });
     }
    

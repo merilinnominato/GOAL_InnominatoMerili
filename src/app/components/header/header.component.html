@@ -1,0 +1,23 @@
+<div class="container">
+  <h1 class="h1center m5">Football updates!!!</h1>
+
+  <nav class="nav nav-pills nav-fill">
+    <ng-container *ngFor="let i of countriesSelected">
+      <a
+        [id]="i + 'Select'"
+        class="nav-item nav-link"
+        role="button"
+        (click)="showTableForCountry(i)"
+        [class.active]="tabActive === i.name"
+        >{{ i.name }}</a
+      >
+    </ng-container>
+  </nav>
+
+  <ng-container *ngIf="isLoadedData">
+    <app-table-teams
+      [arrayOfStandings]="arrayOfStandings"
+      [country]="currentLeague"
+    ></app-table-teams>
+  </ng-container>
+</div>

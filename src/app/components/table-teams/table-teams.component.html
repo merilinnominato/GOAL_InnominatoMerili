@@ -1,0 +1,38 @@
+<div class="container">
+  <table class="table m5">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col">Games</th>
+        <th scope="col">W</th>
+        <th scope="col">L</th>
+        <th scope="col">D</th>
+        <th scope="col">Goal Difference</th>
+        <th scope="col">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let i of arrayOfStandings">
+        <tr>
+          <th scope="row">{{ i.rank }}</th>
+          <td>
+            <img [src]="i.team.logo" alt="logo" height="25px" width="25px" />
+          </td>
+          <td>
+            <a role="button" (click)="navigateTo(country, i)">{{
+              i.team.name
+            }}</a>
+          </td>
+          <td>{{ i.all.played }}</td>
+          <td>{{ i.all.win }}</td>
+          <td>{{ i.all.lose }}</td>
+          <td>{{ i.all.draw }}</td>
+          <td>{{ i.goalsDiff }}</td>
+          <td>{{ i.points }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

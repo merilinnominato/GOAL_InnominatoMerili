@@ -6,8 +6,8 @@ import { Team } from './team';
 
 export interface Results {
   get: string;
-  parameters: Array<any>;
-  errors: Array<any>;
+  parameters: any;
+  errors: { requests: string};
   results: number;
   paging: {
     current: number;

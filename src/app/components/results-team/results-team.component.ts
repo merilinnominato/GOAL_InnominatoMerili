@@ -20,6 +20,9 @@ export class ResultsTeamComponent implements OnInit {
   team: Team[] = [];
   dataLoaded: boolean = false;
   currentLeague: any;
+  idloaded: boolean = false;
+  nameTeam: string = '';
+  textError:string = '';
 
   constructor(
     private router: Router,
@@ -37,12 +40,15 @@ export class ResultsTeamComponent implements OnInit {
       if (cl) {
         this.currentLeague = JSON.parse(cl);
       }
-      this.getFixitureForTeam(
-        this.idTeam,
-        this.yearOfToday,
-        +this.idLeague,
-        this.lastReaults
-      );
+      if(this.idTeam && this.idLeague){
+        this.getFixitureForTeam(
+          this.idTeam,
+          this.yearOfToday,
+          +this.idLeague,
+          this.lastReaults
+        );
+      }
+    
     });
   }
 
@@ -59,14 +65,48 @@ export class ResultsTeamComponent implements OnInit {
     league: number,
     last: number
   ) {
+    this.dataLoaded = false;
+    this.textError = ''
+    let sessionteam = sessionStorage.getItem(team+'team');
+    if(sessionteam){
+      this.fixiture = JSON.parse(sessionteam)
+      for(let i of this.team){
+        this.nameTeam = i.team.name
+      }
+      if(this.fixiture.length > 0) {
+        this.dataLoaded = true;
+        this.idloaded = true;
+        this.textError = 'Loaded'
+      }
+    } else {
     this.footballService.getTeamInformation(team).subscribe((res) => {
       this.team = res.response.map((team) => team as Team);
+      if(this.team.length > 0){
+        this.footballService
+        .getFixitureForTeam(team, season, league, last)
+        .subscribe((res) => {
+          this.fixiture = res.response.map((fixiture) => fixiture as Fixitures);
+          
+          for(let i of this.team){
+            this.nameTeam = i.team.name
+          }
+          if(this.fixiture.length > 0) {
+            sessionStorage.setItem(team+'team', JSON.stringify(this.fixiture));
+            this.dataLoaded = true;
+            this.idloaded = true;
+            this.textError = 'Loaded'
+          } else {
+            this.dataLoaded = false
+            this.textError = res.errors.requests;
+          }
+        
+        });
+      } else {
+        this.dataLoaded = false
+        this.textError = res.errors.requests;
+      }
+    
     });
-    this.footballService
-      .getFixitureForTeam(team, season, league, last)
-      .subscribe((res) => {
-        this.fixiture = res.response.map((fixiture) => fixiture as Fixitures);
-        this.dataLoaded = true;
-      });
+  }
   }
 }

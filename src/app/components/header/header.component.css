@@ -1,0 +1,21 @@
+.nav-item.nav-link.active{
+    border-bottom: #06c solid 2px;
+    color: #06c;
+    background-color: white;
+    cursor: inherit;
+    font-weight: bold;
+}
+
+.nav-item.nav-link {
+    border-bottom: solid 1px lightgray;
+    border-radius: 0px;
+}
+
+.card{
+    border-bottom: solid 0px lightgray;
+}
+
+.nav{
+    border-right:solid 1px lightgray; 
+    border-left: solid 1px lightgray;
+}

@@ -19,7 +19,7 @@ export class FootballService {
   constructor(private httpClient: HttpClient) {}
 
   getStandingsForCurrentSeason(year: number, idLeague: number) {
-    // return this.httpClient.get<Results>(this.standings)
+     return this.httpClient.get<Results>(this.standings)
 
     const params = new HttpParams()
       .set('season', year.toString())
@@ -37,7 +37,7 @@ export class FootballService {
     league: number,
     last: number
   ) {
-    //  return this.httpClient.get<Results>(this.fixitures)
+      return this.httpClient.get<Results>(this.fixitures)
 
     const params = new HttpParams()
       .set('team', team.toString())
@@ -52,7 +52,7 @@ export class FootballService {
   }
 
   getTeamInformation(team: number) {
-    // return this.httpClient.get<Results>(this.team)
+     return this.httpClient.get<Results>(this.team)
 
     const params = new HttpParams().set('id', team.toString());
 

@@ -24,10 +24,15 @@ export class HeaderComponent implements OnInit {
   arrayOfStandings: Standings[] = [];
 
   isLoadedData: boolean = false;
+  isResponseLoaded: boolean = false;
   currentLeague!: CurrentLanguage;
 
   tabActive: any;
   paramsFromQuery!: { name: any; idLeague: any };
+
+  textError:string = '';
+  initialString: string = 'Seleziona una '
+
   constructor(
     private footballService: FootballService,
     private route: ActivatedRoute,
@@ -35,8 +40,9 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.textError = "Select Coutry to start"
     this.yearOfToday = this.today.getFullYear();
-    sessionStorage.clear();
+   // sessionStorage.clear();
     this.tabActive = this.route.snapshot.queryParams['country'] || '';
     if (Object.keys(this.route.snapshot.queryParams).length > 0) {
       this.paramsFromQuery = {
@@ -44,40 +50,88 @@ export class HeaderComponent implements OnInit {
         idLeague: this.route.snapshot.queryParams['idLeague'] || '',
       };
       this.showTableForCountry(this.paramsFromQuery);
+    } else{
+      sessionStorage.clear()
     }
   }
 
   showTableForCountry(item: any) {
+    this.isLoadedData = false
+    this.textError = ''
     this.tabActive = item.name;
-    this.footballService
+    this.currentLeague = {
+      id: item.idLeague,
+      country: item.name,
+      name: '',
+      season: 0,
+    }
+    sessionStorage.setItem(
+      'currentLeague',
+      JSON.stringify(this.currentLeague)
+    );
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        country: this.currentLeague.country,
+        idLeague: this.currentLeague.id,
+      },
+      queryParamsHandling: 'merge',
+    });
+    let sessionLeague = sessionStorage.getItem(item.name + 'league');
+    if(sessionLeague) {
+      for (let i of JSON.parse(sessionLeague)) {
+        this.currentLeague = {
+          id: i.league.id,
+          name: i.league.name,
+          season: i.league.season as number,
+          country: item.name,
+        };
+        sessionStorage.setItem(
+          'currentLeague',
+          JSON.stringify(this.currentLeague)
+        );
+        if (i.league.standings) {
+          this.arrayOfStandings = i.league.standings[0];
+          this.isLoadedData = true;
+          this.textError = 'Loaded'
+        }
+      }
+    } else {
+      this.footballService
       .getStandingsForCurrentSeason(this.yearOfToday, item.idLeague)
       .subscribe((res) => {
         this.isLoadedData = false;
         const arrayRes = res.response.map((standings) => standings as Leagues);
-        for (let i of arrayRes) {
-          this.currentLeague = {
-            id: i.league.id,
-            name: i.league.name,
-            season: i.league.season as number,
-            country: item.name,
-          };
-          sessionStorage.setItem(
-            'currentLeague',
-            JSON.stringify(this.currentLeague)
-          );
-          if (i.league.standings) {
-            this.arrayOfStandings = i.league.standings[0];
-            this.isLoadedData = true;
+
+        if(arrayRes.length > 0){
+          sessionStorage.setItem(item.name + 'league', JSON.stringify(arrayRes));
+
+          for (let i of arrayRes) {
+            this.currentLeague = {
+              id: i.league.id,
+              name: i.league.name,
+              season: i.league.season as number,
+              country: item.name,
+            };
+            sessionStorage.setItem(
+              'currentLeague',
+              JSON.stringify(this.currentLeague)
+            );
+            if (i.league.standings) {
+              this.arrayOfStandings = i.league.standings[0];
+              this.isLoadedData = true;
+              this.textError = 'Loaded'
+            }
           }
-          this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: {
-              country: this.currentLeague.country,
-              idLeague: this.currentLeague.id,
-            },
-            queryParamsHandling: 'merge',
-          });
+        } else {
+          this.isLoadedData = false;
+          this.isResponseLoaded = true;
+          this.textError = res.errors.requests
+          console.log(this.textError)
         }
+       
       });
+    }
+   
   }
 }

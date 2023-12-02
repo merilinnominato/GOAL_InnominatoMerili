@@ -1,8 +1,10 @@
+<app-spinner [idloaded]="dataLoaded" [textError]="textError" ></app-spinner>
+
 <div class="container">
   <div class="card m5" *ngIf="dataLoaded">
     <div class="card-header">
-      Last {{ this.lastReaults }} results in {{ currentLeague.name }} for
-      {{ team[0].team.name }} on season {{ yearOfToday }}
+      Last {{ this.lastReaults }} results in {{ currentLeague.name }} for {{nameTeam}}
+       on season {{ yearOfToday }}
     </div>
     <div class="card-body">
       <div class="row" *ngFor="let i of fixiture">
@@ -38,7 +40,9 @@
           />
         </div>
       </div>
-      <a role="button" class="btn btn-primary" (click)="goBack()">BACK</a>
+      <div class="d-grid gap-2">
+        <a  class="btn btn-primary" type="button" (click)="goBack()">Back to Leagues</a>
+      </div>
     </div>
   </div>
 </div>

@@ -8,6 +8,7 @@ import { ResultsTeamComponent } from './components/results-team/results-team.com
 import { TableTeamsComponent } from './components/table-teams/table-teams.component';
 import { FootballService } from './services/football.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     ResultsTeamComponent,
     TableTeamsComponent,
+    SpinnerComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [FootballService],

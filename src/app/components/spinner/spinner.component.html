@@ -1,0 +1,23 @@
+<div class="container" >
+<div *ngIf="textError !== '' && !idloaded" class="d-flex justify-content-center m5">
+    <p>{{textError}}</p>
+</div>
+
+<div *ngIf="textError === ''" class="d-flex justify-content-center m5" [hidden]="idloaded">
+<div class="spinner-grow spinner-grow-sm" role="status" >
+    <span class="sr-only">Loading...</span>
+  </div>
+  <div class="spinner-grow spinner-grow-sm" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <div class="spinner-grow spinner-grow-sm" role="status" >
+    <span class="sr-only">Loading...</span>
+  </div>
+  <div class="spinner-grow spinner-grow-sm" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+ 
+</div>
+
+
+</div>

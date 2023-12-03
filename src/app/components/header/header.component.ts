@@ -27,8 +27,8 @@ export class HeaderComponent implements OnInit {
   isResponseLoaded: boolean = false;
   currentLeague!: CurrentLanguage;
 
-  tabActive: any;
-  paramsFromQuery!: { name: any; idLeague: any };
+  tabActive:string = '';
+  paramsFromQuery!: { name: string; idLeague: number };
 
   textError:string = '';
   initialString: string = 'Seleziona una '
@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  showTableForCountry(item: any) {
+  showTableForCountry(item: { name: string; idLeague: number; }) {
     this.isLoadedData = false
     this.textError = ''
     this.tabActive = item.name;

@@ -13,7 +13,7 @@ export class TableTeamsComponent implements OnInit {
   arrayOfStandings: Standings[] = [];
 
   @Input()
-  country: any;
+  country!: CurrentLanguage;
 
   constructor(private router: Router) {}
 

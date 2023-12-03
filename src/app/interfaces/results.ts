@@ -7,8 +7,8 @@ import { Team } from './team';
 
 export interface Results {
   get: string;
-  parameters: any;
-  errors: any;
+  parameters: Object;
+  errors: [];
   results: number;
   paging: {
     current: number;

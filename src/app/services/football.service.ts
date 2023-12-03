@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Results } from '../interfaces/results';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class FootballService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getStandingsForCurrentSeason(year: number, idLeague: number) {
+  getStandingsForCurrentSeason(year: number, idLeague: number):Observable<Results> {
    //  return this.httpClient.get<Results>(this.standings)
 
     const params = new HttpParams()
@@ -36,7 +37,7 @@ export class FootballService {
     season: number,
     league: number,
     last: number
-  ) {
+  ):Observable<Results> {
    //   return this.httpClient.get<Results>(this.fixitures)
 
     const params = new HttpParams()
@@ -51,7 +52,7 @@ export class FootballService {
     });
   }
 
-  getTeamInformation(team: number, league:number, season: number) {
+  getTeamInformation(team: number, league:number, season: number):Observable<Results> {
    //  return this.httpClient.get<Results>(this.team)
 
     const params = new HttpParams()

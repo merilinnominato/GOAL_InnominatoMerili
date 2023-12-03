@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CurrentLanguage } from 'src/app/interfaces/current-language';
 import { Fixitures } from 'src/app/interfaces/fixitures';
 import { Team } from 'src/app/interfaces/team';
 import { FootballService } from 'src/app/services/football.service';
@@ -12,14 +13,14 @@ import { FootballService } from 'src/app/services/football.service';
 export class ResultsTeamComponent implements OnInit {
   lastReaults = 10;
   idLeague!: string;
-  country: any;
-  idTeam: any;
+  country: string = '';
+  idTeam: string = '';
   today = new Date();
   yearOfToday: number = 0;
   fixiture: Fixitures[] = [];
   team: Team[] = [];
   dataLoaded: boolean = false;
-  currentLeague: any;
+  currentLeague!: CurrentLanguage;
   idloaded: boolean = false;
   nameTeam: string = '';
   textError:string = '';
@@ -33,16 +34,19 @@ export class ResultsTeamComponent implements OnInit {
   ngOnInit(): void {
     this.yearOfToday = this.today.getFullYear();
     this.route.paramMap.subscribe((p) => {
+      if(p){
+        
+      }
       this.idLeague = p.get('idLeague') as string;
-      this.country = p.get('country');
-      this.idTeam = p.get('idTeam');
+      this.country = p.get('country') as string;
+      this.idTeam = p.get('idTeam') as string;
       let cl = sessionStorage.getItem('currentLeague');
       if (cl) {
         this.currentLeague = JSON.parse(cl);
       }
       if(this.idTeam && this.idLeague){
         this.getFixitureForTeam(
-          this.idTeam,
+          +this.idTeam,
           this.yearOfToday,
           +this.idLeague,
           this.lastReaults

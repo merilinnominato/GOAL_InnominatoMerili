@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.textError = "Select Coutry to start"
+    this.textError = "Select Country to start"
     this.yearOfToday = this.today.getFullYear();
    // sessionStorage.clear();
     this.tabActive = this.route.snapshot.queryParams['country'] || '';

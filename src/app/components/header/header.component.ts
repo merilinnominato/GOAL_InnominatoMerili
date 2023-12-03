@@ -126,7 +126,7 @@ export class HeaderComponent implements OnInit {
         } else {
           this.isLoadedData = false;
           this.isResponseLoaded = true;
-          if(res.errors as Array<any>){
+          if(res.errors.length === 0){
          
             this.textError = 'Not Results For team';
           } else {

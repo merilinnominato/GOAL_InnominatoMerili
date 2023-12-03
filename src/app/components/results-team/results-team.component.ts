@@ -103,7 +103,7 @@ export class ResultsTeamComponent implements OnInit {
             this.textError = 'Loaded'
           } else {
 
-            if(res.errors as Array<any>){
+            if(res.errors.length === 0){
               this.textError = 'Not Results For team';
             } else {
              for(let key in res.errors){
@@ -122,7 +122,7 @@ export class ResultsTeamComponent implements OnInit {
         });
       } else {
         this.dataLoaded = false
-        if(res.errors as Array<any>){
+        if(res.errors.length === 0){
           this.textError = 'Not Results For team';
         } else {
          for(let key in res.errors){

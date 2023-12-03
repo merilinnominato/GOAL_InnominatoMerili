@@ -12,5 +12,5 @@ export interface Leagues {
     standings?: Array<Standings[]>;
   };
   country?: Countries;
-  seasons?: Array<any>;
+  seasons?: [];
 }

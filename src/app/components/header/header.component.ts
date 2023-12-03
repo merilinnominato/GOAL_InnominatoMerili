@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   countriesSelected = [
     { name: 'England', idLeague: 39 },
-    { name: 'Spain', idLeague: 107 },
+    { name: 'Spain', idLeague: 140 },
     { name: 'Germany', idLeague: 78 },
     { name: 'France', idLeague: 61 },
     { name: 'Italy', idLeague: 135 },
@@ -77,7 +77,7 @@ export class HeaderComponent implements OnInit {
       },
       queryParamsHandling: 'merge',
     });
-    let sessionLeague = sessionStorage.getItem(item.name + 'league');
+    let sessionLeague = sessionStorage.getItem(item.name + 'league' + item.idLeague);
     if(sessionLeague) {
       for (let i of JSON.parse(sessionLeague)) {
         this.currentLeague = {
@@ -104,7 +104,7 @@ export class HeaderComponent implements OnInit {
         const arrayRes = res.response.map((standings) => standings as Leagues);
 
         if(arrayRes.length > 0){
-          sessionStorage.setItem(item.name + 'league', JSON.stringify(arrayRes));
+          sessionStorage.setItem(item.name + 'league'  + item.idLeague, JSON.stringify(arrayRes));
 
           for (let i of arrayRes) {
             this.currentLeague = {
@@ -126,9 +126,16 @@ export class HeaderComponent implements OnInit {
         } else {
           this.isLoadedData = false;
           this.isResponseLoaded = true;
-          this.textError = res.errors.requests
-          //console.log(this.textError)
+          if(res.errors as Array<any>){
+         
+            this.textError = 'Not Results For team';
+          } else {
+           for(let key in res.errors){
+         
+            this.textError += res.errors[key]
+           }
         }
+      }
        
       }, err => {
         this.isLoadedData = false;

@@ -51,10 +51,13 @@ export class FootballService {
     });
   }
 
-  getTeamInformation(team: number) {
+  getTeamInformation(team: number, league:number, season: number) {
    //  return this.httpClient.get<Results>(this.team)
 
-    const params = new HttpParams().set('id', team.toString());
+    const params = new HttpParams()
+    .set('id', team.toString())
+    .set('league', league.toString())
+    .set('season', season.toString());
 
     return this.httpClient.get<Results>(environment.api + '/teams', {
       headers: this.headers,

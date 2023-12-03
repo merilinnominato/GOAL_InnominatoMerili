@@ -4,10 +4,11 @@ import { Leagues } from './leagues';
 import { Standings } from './standings';
 import { Team } from './team';
 
+
 export interface Results {
   get: string;
   parameters: any;
-  errors: { requests: string};
+  errors: any;
   results: number;
   paging: {
     current: number;

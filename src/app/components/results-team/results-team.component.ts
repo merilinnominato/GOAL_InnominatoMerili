@@ -77,9 +77,11 @@ export class ResultsTeamComponent implements OnInit {
         this.dataLoaded = true;
         this.idloaded = true;
         this.textError = 'Loaded'
+      } else {
+
       }
     } else {
-    this.footballService.getTeamInformation(team).subscribe((res) => {
+    this.footballService.getTeamInformation(team, league,season).subscribe((res) => {
       this.team = res.response.map((team) => team as Team);
       if(this.team.length > 0){
         this.footballService
@@ -96,8 +98,18 @@ export class ResultsTeamComponent implements OnInit {
             this.idloaded = true;
             this.textError = 'Loaded'
           } else {
-            this.dataLoaded = false
-            this.textError = res.errors.requests;
+
+            if(res.errors as Array<any>){
+              this.textError = 'Not Results For team';
+            } else {
+             for(let key in res.errors){
+              this.textError += res.errors[key]
+             }
+              this.dataLoaded = false;
+
+            }
+          
+ 
           }
         
         }, (err) => {
@@ -106,8 +118,14 @@ export class ResultsTeamComponent implements OnInit {
         });
       } else {
         this.dataLoaded = false
-        this.textError = res.errors.requests;
+        if(res.errors as Array<any>){
+          this.textError = 'Not Results For team';
+        } else {
+         for(let key in res.errors){
+          this.textError += res.errors[key]
+         }
       }
+    }
     
     }, err => {
       this.dataLoaded = false
